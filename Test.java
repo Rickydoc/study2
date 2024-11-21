@@ -90,12 +90,59 @@ class user{
                 }
                 else if (i==1){//修改用户
                     String name;
+                    System.out.print("请输入你要修改的用户的名称：");
+                    name = scanner.next();
+                    if (list.users.containsKey(name)){
+                        user tmp = list.users.get(name);
+                        System.out.print("请输入该用户的新密码：");
+                        String newpassword = scanner.next();
+                        tmp.changePassword(newpassword);
+                        System.out.println("用户密码修改成功！");
+                        System.out.print("请输入该用户的权限（A/O/B）：");
+                        char role;
+                        try{
+                            role = scanner.next().charAt(0);
+                        }
+                        catch(Exception e){
+                            System.out.println("输入错误，用户权限修改失败！");
+                            continue;
+                        }
+                        tmp.changeRole(role);
+                        System.out.println("用户权限修改成功！");
+                    }
+                    else{
+                        System.out.println("用户不存在，修改失败！");
+                    }
                 }
                 else if (i==2){//删除用户
-
+                    String name;
+                    System.out.print("请输入你要删除的用户的名称：");
+                    name = scanner.next();
+                    if (list.users.containsKey(name)){
+                        list.users.remove(name);
+                        System.out.println("用户删除成功！");
+                    }
+                    else{
+                        System.out.println("用户不存在，删除失败！");
+                    }
                 }
                 else if (i==3){//新增用户
-
+                    String name,password;
+                    char role;
+                    System.out.print("请输入新用户的名称：");
+                    name = scanner.next();
+                    System.out.print("请输入新用户的密码：");
+                    password = scanner.next();
+                    System.out.print("请输入新用户的权限（A/O/B）：");
+                    try{
+                        role = scanner.next().charAt(0);
+                    }
+                    catch(Exception e){
+                        System.out.println("输入错误，用户新增失败！");
+                        continue;
+                    }
+                    list.add(name,password,role);
+                    System.out.println("用户新增成功！");
                 }
                 else if (i==4){//列出用户
                     list.MemberList();
@@ -129,6 +176,12 @@ class user{
     public void setter(String A,String B,char c){
         this.Name=A;
         this.Password=B;
+        this.role=c;
+    }
+    public void changePassword(String A){
+        this.Password=A;
+    }
+    public void changeRole(char c){
         this.role=c;
     }
     public String getPassword(){
